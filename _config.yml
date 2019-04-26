@@ -110,7 +110,7 @@ author:
   avatar           : "/assets/images/bio-photo.jpg"
   bio              : "I hack stuff and like falafel."
   location         : "EIP"
-  email            : #falafel@sandwich.you
+  #email            : #falafel@sandwich.you
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
