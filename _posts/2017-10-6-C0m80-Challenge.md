@@ -440,15 +440,11 @@ meterpreter >
 
 Bingo, I grabbed a copy of that file to my local machine and then was presented with password vault.
 
-<p align="center">
-  <img src="https://github.com/ihack4falafel/ihack4falafel.github.io/blob/master/assets/images/Bob_password.png">
-</p>
+![](/assets/images/C0m80/Bob_password.png)
 
 Logged in successfully with password of “alice”! And now we have legitimate RDP credentials.
 
-<p align="center">
-  <img src="https://github.com/ihack4falafel/ihack4falafel.github.io/blob/master/assets/images/RDP_Creds.png">
-</p>
+![](/assets/images/C0m80/RDP_Creds.png)
 
 Let’s pretend that we have RDP open 😀 and login to C0m80 locally with `b0b:AliceIsMyBestie`.
 
@@ -687,6 +683,4 @@ Conclusion
 ----------
 The main take away from this VM is no matter how good you think you’re, there’s always something that you don’t know about or never heard of. Kudos to my friend [@3mrgnc3](https://twitter.com/3mrgnc3) for this challenge, and for making sure I was on the right track throughout this journey. Feel free to contact me for questions using the comment section below or just tweet me [@ihack4falafel](https://twitter.com/ihack4falafel). I’ll leave you with my first blood proof ;D, until next time.
 
-<p align="center">
-  <img src="https://github.com/ihack4falafel/ihack4falafel.github.io/blob/master/assets/images/FirstBlood.png">
-</p>
+![](/assets/images/C0m80/FirstBlood.png)
