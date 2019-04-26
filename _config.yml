@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "dark" # "default", "air", "aqua", "contrast", "dirt"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Low Level Shenanigans"
+title                    : "Low-level Shenanigans"
 title_separator          : "-"
 name                     : "ihack4falafel"
 description              : "Research and development stream."
