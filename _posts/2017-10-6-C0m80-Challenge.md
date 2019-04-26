@@ -150,13 +150,7 @@ DOWNLOADED: 184122 - FOUND: 3
 
 Couple of things stood out for me going through the results, the web server, RPC (possible NFS export), and SMB. Started exploring URL(s) from `nikto` and `dirb` results one by one, until I bumped into mantis webpage.
 
-<p align="center">
-  <img src="https://github.com/ihack4falafel/ihack4falafel.github.io/blob/master/assets/images/mantis.png">
-</p>
-
-<p align="center">
-  ![](/assets/images/C0m80/mantis.png)
-</p>
+![](/assets/images/C0m80/mantis.png)
 
 After quick search found the following [exploit](https://www.exploit-db.com/exploits/41890), and by simply changing the id parameter I found the following users:
 
