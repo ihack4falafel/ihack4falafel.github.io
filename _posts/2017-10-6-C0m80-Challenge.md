@@ -154,6 +154,10 @@ Couple of things stood out for me going through the results, the web server, RPC
   <img src="https://github.com/ihack4falafel/ihack4falafel.github.io/blob/master/assets/images/mantis.png">
 </p>
 
+<p align="center">
+  ![](/assets/images/C0m80/mantis.png)
+</p>
+
 After quick search found the following [exploit](https://www.exploit-db.com/exploits/41890), and by simply changing the id parameter I found the following users:
 
 ```sh
