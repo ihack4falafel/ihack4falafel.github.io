@@ -18,7 +18,7 @@ minimal_mistakes_skin    : "dark" # "default", "air", "aqua", "contrast", "dirt"
 locale                   : "en-US"
 title                    : "Low Level Shenanigans"
 title_separator          : "-"
-name                     : "Your Name"
+name                     : "ihack4falafel"
 description              : "Research and development stream."
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -112,18 +112,18 @@ author:
   location         : "EIP"
   email            : falafel@sandwich.you
   links:
-    - label: "Email"
+    - label: "Exploit-DB"
       icon: "fas fa-fw fa-envelope-square"
-      # url: mailto:your.name@email.com
-    - label: "Website"
+      url: "https://www.exploit-db.com/?author=9217"
+    - label: "Packet Storm"
       icon: "fas fa-fw fa-link"
-      # url: "https://your-website.com"
+      url: "https://packetstormsecurity.com/files/author/13304/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/ihack4falafel"
-    - label: "Facebook"
+    - label: "Hack the Box"
       icon: "fab fa-fw fa-facebook-square"
-      # url: "https://facebook.com/"
+      url: "https://www.hackthebox.eu/profile/2963"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ihack4falafel"
@@ -143,15 +143,15 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ihack4falafel"
-    - label: "GitLab"
+    - label: "Exploit-DB"
       icon: "fab fa-fw fa-gitlab"
-      # url:
-    - label: "Bitbucket"
+      url: "https://www.exploit-db.com/?author=9217"
+    - label: "Packet Storm"
       icon: "fab fa-fw fa-bitbucket"
-      # url:
-    - label: "Instagram"
+      url: "https://packetstormsecurity.com/files/author/13304/"
+    - label: "Hack the Box"
       icon: "fab fa-fw fa-instagram"
-      # url:
+      url: "https://www.hackthebox.eu/profile/2963"
 
 
 # Reading Files
