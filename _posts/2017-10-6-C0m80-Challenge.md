@@ -1,10 +1,10 @@
 Introduction
 ------------
-This post is walk-through of how to root C0m80. The challenge is considered hard or at least it was for me. Shout out to [@3mrgnc3](https://twitter.com/3mrgnc3) for putting it together, I did come out the other end with new tricks up my sleeves. You can download the VM from [here](https://www.vulnhub.com/entry/c0m80-1,198/). Lastly, my apologies for the lengthy post, I did try my best to keep it to minimal.
+This post is walk-through of rooting C0m80. The challenge is considered hard or at least it was for me. Shout out to [@3mrgnc3](https://twitter.com/3mrgnc3) for putting it together, I did come out the other end with new tricks up my sleeves. You can download the VM from [here](https://www.vulnhub.com/entry/c0m80-1,198/). Lastly, my apologies for the lengthy post, I did try my best to keep it to minimal.
 
 Walkthrough
 -----------
-Enumeration is KEY if you plan on conquering c0m80. We’ll start by firing off a quick n’ dirty recon script I made, which consist of `nmap`, `nikto`, `dirb`, and `enum4linux`. You can download the script from [here](https://github.com/ihack4falafel/OSCP/blob/master/BASH/Recon.sh), I also took the liberty of removing all of the junk output that we don’t care about!
+Enumeration is key if you plan on conquering c0m80. We’ll start by firing off a quick n’ dirty recon script I made, which consist of `nmap`, `nikto`, `dirb`, and `enum4linux`. You can download the script from [here](https://github.com/ihack4falafel/OSCP/blob/master/BASH/Recon.sh).Also, I took the liberty of removing all of the junk output that we don’t care about!
 
 ```sh
 root@kali:~/Desktop/OSCP/BASH# ./Recon.sh C0m80.ctf
@@ -148,7 +148,7 @@ END_TIME: Mon Sep 25 17:01:44 2017
 DOWNLOADED: 184122 - FOUND: 3
 ```
 
-Couple of things stood out for me going through the results, the web server, RPC (possible NFS export), and SMB. Started exploring URL(s) from `nikto` and `dirb` results one by one, until I bumped into mantis webpage.
+Couple of things stood out for me going through the results, the web server, RPC (possible NFS export), and SMB. Started exploring URL(s) from `nikto` and `dirb` results until I bumped into Mantis webpage.
 
 ![](/assets/images/C0m80/mantis.png)
 
@@ -166,9 +166,9 @@ After quick search found the following [exploit](https://www.exploit-db.com/expl
 #-----------------------------------------------------#----------#
 ```
 
-For some reason Alice was the only administrator account that allowed me to reset her password! Once logged in, started exploring the application to figure out a way to upload shell, ended up spending hours without luck. No worries though, turns out the application had a number of tickets that basically have everything we need to get the initial foothold on C0m80!
+For some reason Alice was the only administrative account that allowed me to reset the password! Once logged in, started exploring the application to figure out a way to upload shell, ended up spending hours without luck. However, the application had a number of tickets that basically have everything we need to get the initial foothold on C0m80!
 
-Again, for the sake of keeping this post consistent and short, will only share screenshots and/or snippets of information that are relevant. Also, I will not mention couple RED HERRINGS that I’ve spent a significant amount of time on. The first clue is regarding bestFTPserver (one of BestestSfotware products) in ticket number 5.
+Again, for the sake of keeping this post consistent and short, will only share screenshots and/or snippets of information that are relevant. Also, I will not mention few red herrings that I’ve spent a significant amount of time on. The first clue is regarding bestFTPserver (one of BestestSfotware products) in ticket number 5.
 
 ```
 Bob,
@@ -206,7 +206,7 @@ i checked them, and they can be re-encoded back into the exe and dll files ok no
 Bob ;)
 ```
 
-At this point, the next logical step would be to reverse engineer `ftp104.bkp` to its original state and then figure out what the hidden feature is. Looks like backup file is hexdump with date tag. Here’s a snippet.
+At this point, the next logical step would be to restore `ftp104.bkp` to its original state and then figure out what the hidden feature is. Looks like the backup file is hexdump with date tag. Here’s a snippet.
 
 ```sh
 Tue Sep 26 08:00:01 BST 2017
@@ -221,13 +221,19 @@ Tue Sep 26 08:00:01 BST 2017
 0000070: 6d6f 6465 2e0d 0d0a 2400 0000 0000 0000 _?..............
 ```
 
-I used bash jutsu to get it back to somewhat close to it’s original state 😀.
+Used bash jutsu to accomplish the task.
 
 ```sh
 root@kali:~# cat /root/Desktop/ftp104.bkp | awk -F" " '{print $2 $3 $4 $5 $6 $7 $8}' > /root/Desktop/ftp104.txt
 ```
 
 And then took the date out and ran the following command:
+
+```sh
+root@kali:~# xxd -r -p /root/Desktop/ftp104.txt > /root/Desktop/ftp104.exe
+```
+
+Now running strings on `ftp104.exe` will reveal our initial foothold.
 
 ```
 AWESOME BOB'S PORTING FEATUR
@@ -442,7 +448,7 @@ Bingo, I grabbed a copy of that file to my local machine and then was presented 
 
 ![](/assets/images/C0m80/Bob_password.png)
 
-Logged in successfully with password of “alice”! And now we have legitimate RDP credentials.
+Logged in successfully with password of `alice`! And now we have legitimate RDP credentials.
 
 ![](/assets/images/C0m80/RDP_Creds.png)
 
@@ -453,7 +459,7 @@ b0b@C0m80:~$ hostname
 c0m80
 ```
 
-After hunting for the obvious privilege escalation exploits on c0m80 and going down few rabbit holes AGAIN! I decided to take a break to clear my mind. I revisited my notes the following day and noticed Jeff’s instructions regarding NotepadPussPuss++ in ticket number 6.
+After hunting for the obvious privilege escalation exploits on c0m80 and going down few rabbit holes AGAIN! I decided to take a break to clear my head. I revisited my notes the following day and noticed Jeff’s instructions regarding NotepadPussPuss++ in ticket number 6.
 
 ```
 Bob,
@@ -489,7 +495,7 @@ bash: cd: bkp/: Permission denied
 b0b@C0m80:/ftpsvr$
 ```
 
-This piece of information made me realize I need to switch to user Al1ce whose a member of the backup group, well going back to my notes again I found there’s RSA key pair under B0b’s `.ssh` directory that matches al1ce’s `authorized_keys`. Let’s check what port sshd is listening on.
+This made me realize I need to switch to user Al1ce whose a member of the backup group, well going back to my notes again I found there’s RSA key pair under B0b’s `.ssh` directory that matches al1ce’s `authorized_keys`. Let’s check what port sshd is listening on.
 
 ```sh
 b0b@C0m80:/$ cat /etc/ssh/sshd_config
@@ -681,6 +687,6 @@ K1ll3rC0m80D3@l7&i5mash3dth1580x
 
 Conclusion
 ----------
-The main take away from this VM is no matter how good you think you’re, there’s always something that you don’t know about or never heard of. Kudos to my friend [@3mrgnc3](https://twitter.com/3mrgnc3) for this challenge, and for making sure I was on the right track throughout this journey. Feel free to contact me for questions using the comment section below or just tweet me [@ihack4falafel](https://twitter.com/ihack4falafel). I’ll leave you with my first blood proof ;D, until next time.
+The main take away is no matter how good you think you’re, there’s always something that you don’t know about or never heard of. Kudos to [@3mrgnc3](https://twitter.com/3mrgnc3) for this challenge, and for making sure I was on the right track throughout this journey. Feel free to contact me for questions using the comment section below or just tweet me [@ihack4falafel](https://twitter.com/ihack4falafel). Here's my first blood proof ;D, until next time.
 
 ![](/assets/images/C0m80/FirstBlood.png)
