@@ -1,6 +1,6 @@
 Introduction
 ------------
-Reverse TCP shell consist of three syscalls, one for setting up socket that includes [socket()](http://man7.org/linux/man-pages/man2/socket.2.html), [connect()](http://man7.org/linux/man-pages/man2/connect.2.html) functions. The second syscall is [dup2()](http://man7.org/linux/man-pages/man2/dup.2.html) for file descriptors, and the last syscall [execve()](http://man7.org/linux/man-pages/man2/execve.2.html) is used to spawn shell upon successful TCP connection. Please note that most of the functions mentioned here have already been covered in my previous blog post [TCP Bind](https://ihack4falafel.github.io/Creating-Custom-TCP-Bind-Shell-~-Linux-x86/), hence this post will only focus on [connect()](http://man7.org/linux/man-pages/man2/connect.2.html) function, which is the main difference between bind and reverse shell! The post will then conclude by tying all the pieces together to create working shellcode.
+Reverse TCP shell consist of three elements, one for setting up socket that includes [socket()](http://man7.org/linux/man-pages/man2/socket.2.html), [connect()](http://man7.org/linux/man-pages/man2/connect.2.html) functions. The second is [dup2()](http://man7.org/linux/man-pages/man2/dup.2.html) for file descriptors, and the last part [execve()](http://man7.org/linux/man-pages/man2/execve.2.html) is used to spawn shell upon successful TCP connection. Please note that most of the syscalls mentioned here have already been covered in my previous blog post [TCP Bind](https://ihack4falafel.github.io/Creating-Custom-TCP-Bind-Shell-~-Linux-x86/), hence this post will only focus on [connect()](http://man7.org/linux/man-pages/man2/connect.2.html) function, which is the main difference between bind and reverse shell! The post will then conclude by tying all the pieces together to create working shellcode.
 
 socket()
 --------
@@ -61,7 +61,7 @@ struct sockaddr_in {
            };
 ```
 
-Now `sin_family` is pretty self-explanatory so will go with `AF_INET`, which according to the first code block in `socket()` translates to `2`.  Also we’ll go with `1337` for `sin_port` and `192.168.80.129` for `sin_addr` both values needs to be pushed in network byte order `big-endian`, and here’s why [RFC1700](https://tools.ietf.org/html/rfc1700). The last argument would be `addrlen` which defines the size of addr in bytes, `16` in our case. Let’s identify ID for `connect()` function `EBX`.
+Now `sin_family` is pretty self-explanatory so will go with `AF_INET`, which according to the first code block in `socket()` translates to `2`.  Also we’ll go with `1337` for `sin_port` and `192.168.80.129` for `sin_addr` both values needs to be pushed in network byte order `big-endian`, and here’s why [RFC1700](https://tools.ietf.org/html/rfc1700). The last argument would be `addrlen` which defines the size of `addr` in bytes, `16` in our case. Let’s identify id for `connect()` function `EBX`.
 
 ```sh
 root@falafel:~$ cat /usr/include/linux/net.h | grep SYS_CONNECT
@@ -366,7 +366,7 @@ ihack4falafel@ubuntu:~$
 
 Closing Thoughts
 ----------------
-This post is continuation of [TCP Bind](https://ihack4falafel.github.io/Creating-Custom-TCP-Bind-Shell-~-Linux-x86/) one, hence did not have much information outside what we’ve already learned. Feel free to contact me for questions using the comment section below or just tweet me [@ihack4falafel](https://twitter.com/ihack4falafel) . All of the code is available on on my github as shown in the link below. Hope this post has been a good resource and I’d like to thank you for viewing!
+This post is continuation of [TCP Bind](https://ihack4falafel.github.io/Creating-Custom-TCP-Bind-Shell-~-Linux-x86/) one, hence did not have much information outside what we’ve already learned. Feel free to contact me for questions via twitter [@ihack4falafel](https://twitter.com/ihack4falafel) . All of the code is available on on my github as shown in the link below. Hope this post has been a good resource and I’d like to thank you for viewing!
 
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification:
 [http://www.securitytube-training.com/online-courses/securitytube-linux-assembly-expert/](http://www.securitytube-training.com/online-courses/securitytube-linux-assembly-expert/)
