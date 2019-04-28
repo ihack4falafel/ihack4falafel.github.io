@@ -160,7 +160,7 @@ Let's analyze the code line by line using the comments section.
 
 ![](/assets/images/Disecting_Msfvenom_Shellcode_Linux_x86/AUser.png)
 
-syscall reference [setreuid()](http://man7.org/linux/man-pages/man2/setreuid.2.html), [open()](http://man7.org/linux/man-pages/man2/open.2.html), [write()](http://man7.org/linux/man-pages/man2/write.2.html), [exit()](http://man7.org/linux/man-pages/man3/exit.3.html)
+syscall reference [setreuid()](http://man7.org/linux/man-pages/man2/setreuid.2.html), [open()](http://man7.org/linux/man-pages/man2/open.2.html), [write()](http://man7.org/linux/man-pages/man2/write.2.html), [exit()](http://man7.org/linux/man-pages/man3/exit.3.html).
 
 Shellcode II
 ------------
