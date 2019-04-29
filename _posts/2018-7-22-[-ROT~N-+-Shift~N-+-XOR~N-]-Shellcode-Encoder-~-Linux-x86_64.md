@@ -82,7 +82,7 @@ Let’s run it.
 
 ![](/assets/images/ROT-N_Shift-N_XOR-N_Shellcode_Encoder_Linux_x86_64/EncoderDemo.gif)
 
-Out of curiosity, I decided to compare my `x86` encoded shellcode VT results (taken at the time the original x86 encoder was created) with x86_64 one and I found the results quite interesting.
+Out of curiosity, I decided to compare my `x86` encoded shellcode VT results (taken at the time the original `x86` encoder was created) with `x86_64` one and I found the results quite interesting.
 
 ![x86 VT Results](/assets/images/ROT-N_Shift-N_XOR-N_Shellcode_Encoder_Linux_x86_64/Screen-Shot-2018-07-21-at-3.45.33-PM.png)
 
