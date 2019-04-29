@@ -128,4 +128,14 @@ _nop:
 
 Now comes that fun part, let’s test out the shellcode.
 
-![](/assets/images/Polymorphic_shellcode_linux_x86/Execve.png)
+![](/assets/images/Password_Protected_TCP_Bind_Shell_Linux_x86_64/BindShellDemo.gif)
+
+Closing Thoughts
+----------------
+I feel like passwords are essential when it comes to bind shells and hope this post will benefit folks looking to create one. All of the above code are available on my [github](https://github.com/ihack4falafel/SLAE64/tree/master/Assignment%201). Feel free to contact me for questions via Twitter [@ihack4falafel](https://twitter.com/ihack4falafel). This post is one of many to come so stay tuned!
+
+This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certiﬁcation:
+
+[http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/index.html](http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/index.html)
+
+Student ID: SLAE64–1579
