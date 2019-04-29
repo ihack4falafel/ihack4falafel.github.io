@@ -1,0 +1,3 @@
+Introduction
+------------
+In efforts to learn as much as I can before starting OSCE later this month, I decided to write a blog post about Return Oriented Programming (ROP). ROP in its entirety is fairly new to me and as such this will be learning experience to me as much as it would be to you. Now If you would like a more in-depth overview of the subject I highly recommend reading Corelan Team tutorial, in fact most (if not all!) of what you will see in this blog post is based on information obtained while reading their exploit development series. Lastly, you need to be somewhat familiar with Buffer Overflows and have solid understanding of x86 Assembly before we continue.
