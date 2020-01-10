@@ -1,3 +1,4 @@
+<!--
 ---
 layout: single
 title: AWE Course Review 
@@ -6,6 +7,7 @@ classes: wide
 header:
   teaser: /assets/images/AWE/AWE_BH2019.JPG
 --- 
+-->
 
 Introduction
 ------------
