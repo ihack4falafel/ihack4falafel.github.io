@@ -15,7 +15,7 @@ This writeup is aimed at folks who are ~~contemplating~~ preparing to take on th
 
 Registeration
 -------------
-In order to get a seat for the course you'd have to have gameplan, otherwise they are gone before you know it. In my case I regsitered with [Twilio](https://www.twilio.com/) SMS service and then modififed the Python script provided in thier website to send me text message as soon as `https://www.blackhat.com/us-19/training/` URL goes live. The script can by found [here](https://gist.github.com/ihack4falafel/11387e6ec4e6381802c50cbf0dc58449).
+In order to get a seat for the course you'd have to have gameplan, otherwise they are gone before you know it. In my case I regsitered with [Twilio](https://www.twilio.com/) SMS service and then modififed the Python script provided in thier website to send me text message as soon as `https://www.blackhat.com/us-19/training/` URL goes live using cronjobs. The script can by found [here](https://gist.github.com/ihack4falafel/11387e6ec4e6381802c50cbf0dc58449).
 
 Pre-Course Preparation
 ----------------------
