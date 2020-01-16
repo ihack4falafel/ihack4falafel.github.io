@@ -27,6 +27,6 @@ Here is my reparation based on information provided by OffSec AWE syllabus as we
 * Practiced basic reverse engineering concepts by taking apart handful of crackmes written in multiple programming languages.
 * Built exploits using ROP chaines (Return-oriented Programming).
 * Studied about kernel exploitation and then built exploit for [HEVD](https://github.com/hacksysteam/HackSysExtremeVulnerableDriver).
-* Followed OJ Reeves two parts youtube session [Hackingz Ze Komputerz](https://www.youtube.com/watch?v=pJZjWXxUEl4) where he wlaks thru reversing and exploiting Capcom.sys vulnerable driver.
+* Followed OJ Reeves two parts youtube session [Hackingz Ze Komputerz](https://www.youtube.com/watch?v=pJZjWXxUEl4) where he walks thru reversing and exploiting Capcom.sys vulnerable driver.
 
 [To be continued]
