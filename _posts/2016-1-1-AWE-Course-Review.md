@@ -29,4 +29,7 @@ Here is my reparation based on information provided by OffSec AWE syllabus as we
 * Studied about kernel exploitation and then built exploit for [HEVD](https://github.com/hacksysteam/HackSysExtremeVulnerableDriver).
 * Followed OJ Reeves two parts youtube session [Hackingz Ze Komputerz](https://www.youtube.com/watch?v=pJZjWXxUEl4) where he walks thru reversing and exploiting Capcom.sys vulnerable driver.
 
+Pre-Course Challenege
+---------------------
+
 [To be continued]
