@@ -20,7 +20,7 @@ In order to get a seat for the course you'd have to have gameplan, otherwise the
 Pre-Course Preparation
 ----------------------
 Here is my reparation based on information provided by OffSec AWE syllabus as well as the course details/prerequisites section in chronological order:
-* Completed the course and exercises offered by the SecurityTube Linux Assembly64 Expert (SLAE64). Although there was nothing new really in terms of content if you had already taken the x86 version however, I thought it was a good place to reinforce assembly basics learned and more importantly familiarize myself with x86_64 architecture.
+* Completed the course and exercises offered by the SecurityTube Linux Assembly64 Expert (SLAE64). Although there was nothing new really in terms of content if you had already taken the x86 version however, I thought it was a good place to reinforce assembly basics and more importantly familiarize myself with x86_64 architecture.
 * Studied and written programs in C/C++.
 * Attended the Corelan Advanced Exploit Development course instructed by Peter Van Eeckhoutte where I learned great deal about Windows Heap and WinDbg. Yes, it was 32-bit based course but the arcane knowledge acquired was priceless nonetheless.
 * Learned reverse engineering basics using tools like IDA pro, Binary Ninja, and dnSpy.
