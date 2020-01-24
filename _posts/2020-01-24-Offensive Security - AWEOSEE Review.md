@@ -11,6 +11,8 @@ Introduction
 ------------
 This writeup is aimed at folks who are ~~contemplating~~ preparing to take on the AWE course offered by OffSec at Black Hat but are not quite sure where to start. Although you may think taking the course is just the natural continuation after OSCP and OSCE,  the reasoning behind my decision is the fact that the course is all about Windows exploitation, which is what I personally want to excel at. I have nothing against \*inux, in fact I use it on daily basis, I'm just not interested in it from exploitation standpoint. My interest revolves around logic bugs and kernel exploitation for the most part.
 
+![](/assets/images/AWE/IMG_2949.jpg)
+
 Registration
 -------------
 In order to get a seat for the course you have to have a game plan, otherwise registration will be full before you know it. In my experience I registered with [Twilio](https://www.twilio.com/) SMS service and then modified a Python script provided in their website to send me text message as soon as `https://www.blackhat.com/us-19/training/` URL goes live using cronjobs. The script can be found [here](https://gist.github.com/ihack4falafel/11387e6ec4e6381802c50cbf0dc58449).
