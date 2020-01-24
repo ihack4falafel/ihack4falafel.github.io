@@ -9,7 +9,7 @@ header:
 
 Introduction
 ------------
-This writeup is aimed at folks who are ~~contemplating~~ preparing to take on the AWE course offered by OffSec at Black Hat but are not quite sure where to start. Although you may think taking the course is just the natural continuation after OSCP and OSCE,  the reasoning behind my decision is the fact that the course is all about Windows exploitation, which is what I personally want to excel at. I have nothing against \*inux, in fact I use it on daily basis, I'm just not interested in it from exploitation standpoint. My interest revolves around logic bugs and kernel exploitation for the most part.
+This writeup is aimed at folks who are ~~contemplating~~ preparing to take on the AWE course offered by OffSec at Black Hat but are not quite sure where to start. Although you may think taking the course is just the natural continuation after OSCP and OSCE,  the reasoning behind my decision is the fact that the course is all about Windows exploitation, which is what I personally want to excel at. I have nothing against \*nix, in fact I use it on daily basis, I'm just not interested in it from exploitation standpoint. My interest revolves around logic bugs and kernel exploitation for the most part.
 
 ![](/assets/images/AWE/IMG_2949.jpg)
 
