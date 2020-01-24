@@ -1,4 +1,3 @@
-<!--
 ---
 layout: single
 title: Offensive Security - AWE/OSEE Review 
@@ -6,8 +5,7 @@ date: 2020-1-24
 classes: wide
 header:
   teaser: /assets/images/AWE/IMG_2949.jpg
---- 
--->
+---
 
 Introduction
 ------------
