@@ -9,7 +9,7 @@ header:
 
 Introduction
 ------------
-This writeup is aimed at folks who are ~~contemplating~~ preparing to take on the AWE course offered by OffSec at Black Hat but are not quite sure where to start. Although you may think taking the course is just the natural continuation after OSCP and OSCE,  the reasoning behind my decision is the fact that the course is all about Windows exploitation, which is what I personally want to excel at. I have nothing against \*nix, in fact I use it on daily basis, I'm just not interested in it from exploitation standpoint. My interest revolves around logic bugs and kernel exploitation for the most part.
+This writeup is aimed at folks who are ~~contemplating~~ preparing to take on the AWE course offered by OffSec at Black Hat but are not quite sure where to start. Although you may think taking the course is just the natural continuation after OSCP and OSCE,  the reasoning behind my decision is the fact that the course is all about Windows exploitation, which is what I personally want to excel at. I have nothing against \*nix, in fact I use it on daily basis, I'm just not interested in it from an exploitation standpoint. My interest revolves around logic bugs and kernel exploitation for the most part.
 
 ![](/assets/images/AWE/IMG_2949.jpg)
 
@@ -23,15 +23,15 @@ Pre-course Preparation
 ----------------------
 Below is my preparation based on information provided by OffSec AWE syllabus as well as the course details/prerequisites section in chronological order:
 
-* Completed the course and exercises offered by the SecurityTube Linux Assembly64 Expert (SLAE64). There was nothing new really in terms of content if you had already taken the 32-bit version; however,I thought it was a good place to reinforce assembly basics and, more importantly, familiarize myself with 64-bit architecture.
+* Completed the course and exercises offered by the SecurityTube Linux Assembly64 Expert (SLAE64). There was nothing new really in terms of content if you had already taken the 32-bit version; however, I thought it was a good place to reinforce assembly basics and, more importantly, familiarize myself with 64-bit architecture.
 * Studied and wrote programs in C/C++.
 * Attended the Corelan Advanced Exploit Development course instructed by Peter Van Eeckhoutte where I learned great deal about Windows Heap and WinDbg. Yes, it was 32-bit based course, but the arcane knowledge acquired was priceless nonetheless.
 * Learned reverse engineering basics using tools like IDA pro, Binary Ninja, and dnSpy.
 * Practiced basic reverse engineering concepts by taking apart handful of crackmes written in multiple programming languages.
-* Built exploits using ROP chains (Return-oriented Programming) using automated scripts mostly with minor modifications.
+* Built exploits using ROP (Return-oriented Programming) chains using automated scripts mostly with minor modifications.
 * Studied about kernel exploitation and then built exploits for [HEVD](https://github.com/hacksysteam/HackSysExtremeVulnerableDriver).
 * Followed OJ Reeves two parts YouTube session [Hackingz Ze Komputerz](https://www.youtube.com/watch?v=pJZjWXxUEl4) where he walks thru reversing and exploiting Capcom.sys vulnerable driver.
-* Watched this video by OALabs few times [WinDbg Basics for Malware Analysis](https://www.youtube.com/watch?v=QuFJpH3My7A).
+* Watched [WinDbg Basics for Malware Analysis](https://www.youtube.com/watch?v=QuFJpH3My7A) video by OALabs for few times.
 
 Some of my pre-course preparation shenanigans can be found [here](https://github.com/ihack4falafel/OSEE). 
 
@@ -41,9 +41,9 @@ Few months prior to course start date OffSec will email you the pre-course chall
 
 Course
 ------
-The course consists of 4 modules that gets progressively harder with multiple exercises and extra miles (homework). The first module discusess in-depth custom shellcoding on 64-bits systems and what it adds compared to 32-bits. The second module we take deep dive into VMWare internals and ultimately preforming guest-to-hosts escape. The third module is all about Edge exploitation where we learn about things such as type confusion bugs and sandbox escapes. Lastly, we switch gears to kernel space exploitation. Not to mention learning how to bypass modern protections such as ACG, CFG, and SMEP to name a few and building version independent exploits.
+The course consists of 4 modules that gets progressively harder with multiple exercises and extra miles (homework). The first module discusess in-depth custom shellcoding on 64-bits systems and what it adds compared to 32-bits. The second module we take a deep dive into VMWare internals and ultimately preforming guest-to-hosts escape. The third module is all about Edge exploitation where we learn about things such as type confusion bugs and sandbox escapes. Lastly, we switch gears to kernel space exploitation. Not to mention learning how to bypass modern protections such as ACG, CFG, and SMEP to name a few and building version independent exploits.
 
-From my experience, I thought the course was quite intense, in the sense that the amount of knowledge dropped was mind blowing but exciting at the same time. The course was mostly hands-on as you'd expect from OffSec and I could tell a lot of effort has been put into making sure the content is well outlined and up-to-date. It's worth mentioning the instructors were always looking to help the students without giving too much information, in fact they offered post course support. I can't believe I'm going to say this, but I truly miss the course now that I'm thinking about it and I'm glad I was able to put names to faces and make new friends just by attending. 
+From my experience, I thought the course was quite intense, in the sense that the amount of knowledge dropped was mind blowing but exciting at the same time. The course was mostly hands-on as you'd expect from OffSec and I could tell a lot of effort has been put into making sure the content is well outlined and up-to-date. It's worth mentioning the instructors were always looking to help the students without giving too much information, in fact they offered post course support. I can't believe I'm going to say this, but I truly miss the course now that I'm writing about it and I'm glad I was able to put names to faces and make new friends just by attending. 
 
 Pre-exam Preparation
 ---------------------
