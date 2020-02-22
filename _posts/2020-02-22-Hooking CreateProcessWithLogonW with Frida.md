@@ -27,7 +27,7 @@ Start
 -----
 As the name suggest, the [start](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start) command enables a user to open a separate window from the Windows command line. Let's execute the below command to spawn command prompt as a different user while running API Monitor in the background.
 
-![](/assets/images/APIHooking/Start.jpg)
+![](/assets/images/APIHooking/Start.PNG)
 
 We notice call to [CreateProcessWithLogonW](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithlogonw) API which holds the credential values we just entered in the first and second parameters.
 
