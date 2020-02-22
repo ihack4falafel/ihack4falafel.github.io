@@ -1,4 +1,3 @@
-<!--
 ---
 layout: single
 title: Hooking CreateProcessWithLogonW with Frida
@@ -7,7 +6,6 @@ classes: wide
 header:
   teaser: /assets/images/APIHooking/Start.jpg
 ---
--->
 
 Introduction
 ------------
