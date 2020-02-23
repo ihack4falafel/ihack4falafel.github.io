@@ -99,4 +99,4 @@ Let's test it.
 
 Conclusion
 ----------
-I believe this post serves as a gentle introduction to API hooking and I'm sure I missed a few other commands that make use of [CreateProcessWithLogonW](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithlogonw) API behind the scenes ;D. I don't know wether this is useful from post-exploitation standpoint and would rather leave it to the reader to decide. Lastly, I would like to thank [@h0mbre_](https://twitter.com/h0mbre_) for reviewing this post and hope this was a good read.
+I believe this post serves as a gentle introduction to API hooking and I'm sure I missed a few other commands that make use of [CreateProcessWithLogonW](https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithlogonw) API behind the scenes ;D. I don't know wether this is useful from post-exploitation standpoint and would rather leave it to the reader to decide. Lastly, I would like to thank [@h0mbre_](https://twitter.com/h0mbre_) for reviewing this post and hope it was a good read.
