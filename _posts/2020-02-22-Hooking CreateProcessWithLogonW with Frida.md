@@ -4,7 +4,7 @@ title: Hooking CreateProcessWithLogonW with Frida
 date: 2020-2-22
 classes: wide
 header:
-  teaser: /assets/images/APIHooking/Start.jpg
+  teaser: /assets/images/APIHooking/Start.PNG
 ---
 
 Introduction
