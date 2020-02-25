@@ -1,10 +1,10 @@
 ---
 layout: single
-title: [ Rot-n + Shift-n + Xor-n] Shellcode Encoder - Linux x86
+title: (Rot-n + Shift-n + Xor-n) Shellcode Encoder - Linux x86
 date: 2018-1-22
 classes: wide
 header:
-
+  teaser: /assets/images/APIHooking/Start.PNG
 ---
 
 Introduction
