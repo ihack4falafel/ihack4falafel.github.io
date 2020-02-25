@@ -1,3 +1,12 @@
+---
+layout: single
+title: Creating Custom TCP Bind Shell - Linux x86
+date: 2018-1-12
+classes: wide
+header:
+  teaser: /assets/images/Creating_Custom_TCP_Bind_Shell_Linux_x86/BindShell.png
+---
+
 Introduction
 ------------
 Bind TCP shell consist of three main components, one for setting up socket that includes [socket()](http://man7.org/linux/man-pages/man2/socket.2.html), [bind()](http://man7.org/linux/man-pages/man2/bind.2.html), [listen()](http://man7.org/linux/man-pages/man2/listen.2.html), and [accept()](http://man7.org/linux/man-pages/man2/accept.2.html) functions. The second element is [dup2()](http://man7.org/linux/man-pages/man2/dup.2.html) for file descriptors, and the last part is [execve()](http://man7.org/linux/man-pages/man2/execve.2.html) which is used to spawn shell upon receiving a successful TCP connection. This post is an in depth analysis of those syscalls as well as their corresponding assembly code. The post will then conclude by tying all the pieces together to create working shellcode.
