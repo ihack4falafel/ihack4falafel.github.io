@@ -1,6 +1,6 @@
 ---
 layout: single
-title: -[ ROT-N + Shift-N + XOR-N] Shellcode Encoder - Linux x86_64
+title: [ ROT-N + Shift-N + XOR-N] Shellcode Encoder - Linux x86_64
 date: 2018-7-22
 classes: wide
 header:
