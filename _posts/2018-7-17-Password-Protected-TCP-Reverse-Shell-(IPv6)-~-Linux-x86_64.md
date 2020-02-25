@@ -1,3 +1,12 @@
+---
+layout: single
+title:  Password Protected TCP Reverse Shell (IPv6) - Linux x86_64
+date: 2018-7-17
+classes: wide
+header:
+  teaser: /assets/images/Password_Protected_TCP_Reverse_Shell_(IPv6)_Linux_x86_64/ReverseShellDemo.gif
+---
+
 Introduction
 ------------
 In this post we will create a custom TCP reverse shell for Linux x86_64 architecture that requires password to spawn a shell. This post is a continuation of [Password Protected Tcp Bind Shell ~ Linux X86_64](https://ihack4falafel.github.io/Password-Protected-TCP-Bind-Shell-~-Linux-x86_64/) and since my previous posts include an in-depth analysis of the functions used in reverse shells we won’t spend too much time there.
