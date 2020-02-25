@@ -1,3 +1,12 @@
+---
+layout: single
+title: Polymorphic Shellcode - Linux x86_64
+date: 2018-7-25
+classes: wide
+header:
+  teaser: /assets/images/
+---
+
 Introduction
 ------------
 In general polymorphism mean the ability to appear in many forms, it’s also referred to as a feature of object-oriented programing in computer science. In this post we will take three sample shellcodes off of exploit-db and mutate them in order to beat pattern matching. The final shellcode size should be less or equal to 150% of the original shellcode. Please refer to my SLAE32 series to learn more about polymorphism.
