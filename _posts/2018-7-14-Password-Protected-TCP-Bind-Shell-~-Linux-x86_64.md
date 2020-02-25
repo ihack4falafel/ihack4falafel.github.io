@@ -1,3 +1,12 @@
+---
+layout: single
+title: Password Protected TCP Bind Shell - Linux x86_64
+date: 2018-7-14
+classes: wide
+header:
+  teaser: /assets/images/Password_Protected_TCP_Bind_Shell_Linux_x86_64/BindShellDemo.gif
+---
+
 Introduction
 ------------
 In this post we will create a custom TCP bind shell for Linux x86_64 architecture that requires password to spawn a shell. Please note we wont be going into too much details on how each function work as this has already been discussed in my previous post [here](https://ihack4falafel.github.io/Creating-Custom-TCP-Bind-Shell-~-Linux-x86/).
