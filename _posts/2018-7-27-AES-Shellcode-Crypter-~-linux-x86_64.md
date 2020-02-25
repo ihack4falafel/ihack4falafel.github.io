@@ -1,3 +1,12 @@
+---
+layout: single
+title: AES Shellcode Crypter linux 86_64
+date: 2018-7-27
+classes: wide
+header:
+  teaser: /assets/images/AES_Shellcode_Crypter_Linux_x86_64/Forumla.png
+---
+
 Introduction
 ------------
 The Advanced Encryption Standard (AES) is a symmetric block cipher encryption algorithm that uses the same key (also known as secret-key) for encryption and decryption where each cipher encrypts and decrypts data in blocks of `128-bit` using cryptographic keys of `128-bit`, `192-bit` and `256-bit`, respectively. AES consist of multiple modes of operation to preform encryption some of which requires random Initialization Vector (IV). In this post we’ll look at shellcode encryption/decryption using AES with `128-bit` key and Electronic Codebook (ECB) mode of operation.
