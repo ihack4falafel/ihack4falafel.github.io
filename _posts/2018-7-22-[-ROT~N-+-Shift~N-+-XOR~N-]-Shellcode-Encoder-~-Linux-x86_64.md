@@ -1,3 +1,12 @@
+---
+layout: single
+title: -[ ROT-N + Shift-N + XOR-N] Shellcode Encoder - Linux x86_64
+date: 2018-7-22
+classes: wide
+header:
+  teaser: /assets/images/ROT-N_Shift-N_XOR-N_Shellcode_Encoder_Linux_x86_64/EncoderDemo.gif
+---
+
 Introduction
 ------------
 Encoding schemes are used to transform data in a way that makes it consumable by different systems in a safe manner. In this post we’ll look at how we can bypass AVs by ab(using) this scheme to encode otherwise detectable shellcode.
