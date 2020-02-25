@@ -4,7 +4,6 @@ title: RC2 Shellcode Crypter in Python - Linux x86
 date: 2018-1-29
 classes: wide
 header:
-  teaser: /assets/images/
 ---
 
 Introduction
