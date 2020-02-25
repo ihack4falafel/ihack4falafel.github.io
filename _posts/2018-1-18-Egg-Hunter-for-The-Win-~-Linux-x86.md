@@ -1,3 +1,11 @@
+---
+layout: single
+title: Egg Hunter for the Win - Linux x86
+date: 2018-1-18
+classes: wide
+header:
+---
+
 Introduction
 ------------
 What is egg hunter? and why on earth would you need it? This post will answer those questions and discuss [access()](http://man7.org/linux/man-pages/man2/access.2.html) syscall briefly, which is a vital part of the shellcode itself. The post will then conclude by demoing a working egg hunter shellcode. Please note all of the work here is based off of [Skape’s paper](http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf).
