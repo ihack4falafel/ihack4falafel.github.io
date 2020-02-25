@@ -1,3 +1,12 @@
+---
+layout: single
+title: Analyzing MSFVenom Payloads with Binary Ninja - Linux x86_64
+date: 2018-7-24
+classes: wide
+header:
+  teaser: /assets/images/Analyzing_Msfvenom_Payloads_with_Binary_Ninja_linux_x86_64/exec .png
+---
+
 Introduction
 ------------
 In efforts to learn more about Binary Ninja, we will be taking apart three shellcode samples generated via `msfvenom`. Please note that disassemblers in general including Binary Ninja are fairly new to me and as such this will be a learning experience to me as much as it will be to you.
