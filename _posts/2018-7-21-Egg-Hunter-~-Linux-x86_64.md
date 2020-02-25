@@ -1,3 +1,12 @@
+---
+layout: single
+title: Egg Hunter - Linux x86_64
+date: 2018-7-21
+classes: wide
+header:
+  teaser: /assets/images/Egg_Hunter_Linux_x86_64/EggHunterDemo.gif
+---
+
 Introduction
 ------------
 Egg hunter is a technique used to capture larger payloads in memory by tagging the start of the shellcode with an egg. In most cases, egg hunters are used when you don’t have enough space to host your desired shellcode. In this post we’ll create an egg hunter for Linux x86_64 and couple it with `execve()` shellcode for testing. Please refer to my SLAE32 series of posts for more details about egg hunting.
