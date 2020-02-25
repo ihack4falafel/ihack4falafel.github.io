@@ -4,7 +4,6 @@ title: Polymorphic Shellcode - Linux x86_64
 date: 2018-7-25
 classes: wide
 header:
-  teaser: /assets/images/
 ---
 
 Introduction
