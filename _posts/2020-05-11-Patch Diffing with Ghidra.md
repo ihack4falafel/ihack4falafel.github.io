@@ -25,7 +25,7 @@ Vulnerable Program
 ------------------
 The following is C program that is vulnerable to buffer overflow due to the use of unsafe [gets](https://www.tutorialspoint.com/c_standard_library/c_function_gets.htm) function. I'm going to assume the reader is already familiar with C programming and buffer overflows, if not then Google is your friend.
 
-```C
+```c
 #include <stdio.h>
 #include <string.h>
 
@@ -59,7 +59,7 @@ Patch
 -----
 I'm by no means a good programmer, but I believe replacing [gets](https://www.tutorialspoint.com/c_standard_library/c_function_gets.htm) with [fgets](https://www.tutorialspoint.com/c_standard_library/c_function_fgets.htm) should mitigate the issue. Let me know if there is a more elegant way to fix it.
 
-```C
+```c
 #include <stdio.h>
 #include <string.h>
 
@@ -150,7 +150,7 @@ We can see from the image above this is the main function. The following are all
 
 Now before we go over the changes, here's what `fgets` function looks like and where the arguments should be placed based on `__fastcall` calling convention:
 
-```C
+```c
 char *fgets(char *str, int n, FILE *stream)
 RCX = This is the pointer to an array of chars where the string read is stored.
 RDX = This is the maximum number of characters to be read (including the final null-character). Usually, the length of the array passed as str is used.
@@ -166,7 +166,6 @@ R8  = This is the pointer to a FILE object that identifies the stream where char
 * `MOV EDX, 0xe` - move value of `14` to `EDX`. 
 
 To be complete, I should mention the pointer to the buffer that will hold the data is then stored in `RCX` via `LEA RCX, [RBP, 0x8]` and ultimately a call to `fgets` is made which matches the patch that was put into place. At this point, you might be asking yourself what about `fgets` function call? Why wasn't it marked as a change from the unpatched version? The reason `CALL qword ptr[PTR_fgets_140020308]` was not highlighted, and please correct me if I'm wrong, is due to no changes in the mnemonic itself rather the operand which as far as I know BinDiff does not account for.
-
 
 Conclusion
 ----------
